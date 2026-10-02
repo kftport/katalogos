@@ -9,11 +9,32 @@
 body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
 header{background:linear-gradient(155deg,var(--forest),var(--forest2));color:#fff;padding:14px 18px;position:sticky;top:0;z-index:30;box-shadow:0 2px 14px rgba(15,61,43,.18)}
 .bar{display:flex;align-items:center;gap:11px;max-width:1240px;margin:0 auto}
-.mark{width:34px;height:34px;border-radius:9px;background:var(--lime);display:grid;place-items:center;font-family:'Sora';font-weight:700;color:var(--forest2);font-size:18px;flex:none;cursor:pointer}
+
 .bar h1{font-family:'Sora';font-weight:600;font-size:15px;cursor:pointer} .bar p{font-size:11px;opacity:.82;margin-top:1px}
-.modes{display:flex;gap:6px;margin-left:auto}
-.mode{font-family:'Sora';font-weight:600;font-size:11.5px;padding:6px 11px;border-radius:100px;background:rgba(255,255,255,.16);color:#fff;border:0;cursor:pointer}
-.mode.active{background:var(--lime);color:var(--forest2)} .mode.dim{opacity:.5}
+.ham{display:flex;align-items:center;gap:8px;background:none;border:0;color:#fff;cursor:pointer;padding:4px 0;flex:none}
+.ham-icon{font-size:22px;line-height:1}
+.ham-label{font-family:'Sora';font-weight:600;font-size:13px;letter-spacing:.5px}
+.logo-center{position:absolute;left:50%;transform:translateX(-50%);cursor:pointer;text-align:center}
+.logo-center h1{font-family:'Sora';font-weight:600;font-size:15px}
+.bar{position:relative;justify-content:flex-start}
+.mode-tabs{display:flex;gap:6px;margin:0 2px 12px}
+.mode-tab{font-family:'Sora';font-weight:600;font-size:12px;padding:7px 14px;border-radius:100px;background:var(--line);color:var(--muted);border:0;cursor:pointer;transition:all .15s}
+.mode-tab.active{background:var(--forest);color:#fff}
+.mode-tab:hover:not(.active){background:#d6ddd5}
+.catalog-bar{display:flex;align-items:center;gap:0;margin:0 2px 14px;background:#f0f4ef;border-radius:14px;padding:5px;overflow:hidden}
+.catalog-bar .cb-label{font-family:'Sora';font-weight:700;font-size:13px;color:var(--forest);padding:8px 16px;white-space:nowrap}
+.catalog-bar .cb-tabs{display:flex;gap:4px}
+.catalog-bar .cb-tab{font-family:'Sora';font-weight:600;font-size:12px;padding:8px 16px;border-radius:10px;border:0;cursor:pointer;transition:all .15s;white-space:nowrap;background:transparent;color:var(--muted)}
+.catalog-bar .cb-tab.active{background:var(--forest);color:#fff;box-shadow:0 2px 8px rgba(23,81,58,.25)}
+.catalog-bar .cb-tab:hover:not(.active){background:#e0e8de}
+.sn-item.highlight{background:#d32f2f;color:#fff;font-family:'Sora';font-weight:700;font-size:16px;border-bottom:2px solid #b71c1c}
+.sn-item.highlight:hover{background:#c62828}
+.sn-item.highlight .sn-arrow{color:rgba(255,255,255,.7)}
+.sn-mode-tabs{display:flex;gap:0;padding:0;border-bottom:2px solid var(--line);flex:none}
+.sn-mode-tab{flex:1;padding:12px 0;text-align:center;font-family:'Sora';font-weight:600;font-size:13px;cursor:pointer;border:0;background:#f5f9f5;color:var(--muted);transition:all .15s}
+.sn-mode-tab.active{background:#fff;color:var(--forest);box-shadow:inset 0 -3px 0 var(--forest)}
+.sn-mode-tab:hover:not(.active){background:#eaf0ea}
+
 main{max-width:1240px;margin:0 auto;padding:16px 16px 70px;min-height:60vh}
 .crumb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 2px 12px;font-size:14px;color:var(--muted)}
 .crumb a{color:var(--forest);text-decoration:none;font-weight:600;cursor:pointer} .crumb .sep{opacity:.5}
@@ -46,9 +67,35 @@ main{max-width:1240px;margin:0 auto;padding:16px 16px 70px;min-height:60vh}
 .lb-nav.prev{left:-4px} .lb-nav.next{right:-4px}
 .lb-count{position:fixed;bottom:20px;left:0;right:0;text-align:center;color:#fff;font-size:13px;opacity:.85;font-family:'Sora'}
 @media(max-width:640px){.h-title{font-size:24px}.tile .meta h3{font-size:16px}.tiles{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}.grid{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}.cover.icon svg{width:42px;height:42px}.bar p{display:none}.lb-nav{width:44px;height:44px;font-size:28px}}
+
+
+.nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:49;display:none}
+.nav-overlay.open{display:block}
+.side-nav{position:fixed;top:0;left:-320px;width:300px;max-width:85vw;height:100%;background:#fff;z-index:50;overflow-y:auto;transition:right .25s ease;box-shadow:4px 0 20px rgba(0,0,0,.2);display:flex;flex-direction:column}
+.side-nav.open{left:0}
+.sn-head{background:linear-gradient(155deg,var(--forest),var(--forest2));color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex:none}
+.sn-head h2{font-family:'Sora';font-size:17px;font-weight:600}
+.sn-close{font-size:24px;background:none;border:0;color:#fff;cursor:pointer;font-family:'Sora'}
+.sn-search{padding:12px 16px;border-bottom:1px solid var(--line);flex:none}
+.sn-search input{width:100%;padding:10px 14px;border:2px solid var(--line);border-radius:12px;font-size:14px;outline:none;font-family:'Inter';color:var(--muted)}
+.sn-back{display:flex;align-items:center;gap:8px;padding:12px 20px;font-family:'Sora';font-weight:600;font-size:14px;color:var(--forest);cursor:pointer;border-bottom:2px solid var(--line);background:#f5f9f5;flex:none}
+.sn-back:hover{background:#e7f0e6}
+.sn-list{list-style:none;padding:0;overflow-y:auto;flex:1}
+.sn-item{padding:14px 20px;font-size:15px;font-weight:500;cursor:pointer;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;color:var(--ink)}
+.sn-item:hover{background:#f0f6f0}
+.sn-item:active{background:#e0ece0}
+.sn-item .sn-arrow{color:var(--muted);font-size:18px}
+.sn-item.active{color:var(--forest);font-weight:600;background:#f0f9f0}
 </style></head><body>
-<header><div class="bar"><div class="mark" onclick="goHome()">S</div><div><h1 onclick="goHome()">Stogiannos Logistics</h1><p>7000+ προϊόντα σε 11 κατηγορίες</p></div>
-<div class="modes"><button class="mode active" id="btnCat" onclick="toggleMode('cat')">Ανά κατηγορία</button><button class="mode" id="btnBrand" onclick="toggleMode('brand')">Ανά εταιρία</button></div></div></header>
+<header><div class="bar"><button class="ham" onclick="toggleNav()"><span class="ham-icon">☰</span><span class="ham-label">Menu</span></button><div class="logo-center" onclick="goHome()"><h1>Stogiannos Logistics</h1></div></div></header>
+<div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
+<nav class="side-nav" id="sideNav">
+<div class="sn-head"><h2>Μενού</h2><button class="sn-close" onclick="closeNav()">✕</button></div>
+<div class="sn-mode-tabs"><button class="sn-mode-tab active" id="snTabCat" onclick="setNavMode('cat')">Ανά κατηγορία</button><button class="sn-mode-tab" id="snTabBrand" onclick="setNavMode('brand')">Ανά εταιρία</button></div>
+<div class="sn-search"><input type="text" placeholder="Αναζήτηση προϊόντος..." disabled style="opacity:.5;cursor:not-allowed"></div>
+<div class="sn-back" id="snBack" style="display:none" onclick="navBack()">← Πίσω</div>
+<ul class="sn-list" id="snList"></ul>
+</nav>
 <main id="app"></main>
 <div class="lb" id="lb"><span class="lb-close" id="lbClose">✕</span><span class="lb-nav prev" id="lbPrev">‹</span><div class="stage"><img id="lbimg"></div><span class="lb-nav next" id="lbNext">›</span><div class="lb-count" id="lbCount"></div></div>
 <script>
@@ -71,13 +118,20 @@ function go(i){path.push(i);render();window.scrollTo(0,0);}
 function goTo(len){path=path.slice(0,len);render();window.scrollTo(0,0);}
 function render(){
  app.innerHTML='';const cur=nodeAt(path),isHome=!path.length;
- if(!isHome){
+ if(isHome){
+   const bar=el('<div class="catalog-bar"><span class="cb-label">Κατάλογος</span><div class="cb-tabs"><button class="cb-tab'+(MODE==='cat'?' active':'')+'">Ανά κατηγορία</button><button class="cb-tab'+(MODE==='brand'?' active':'')+'">Ανά εταιρία</button></div></div>');
+   bar.querySelectorAll('.cb-tab')[0].onclick=()=>{if(MODE!=='cat'){MODE='cat';path=[];render();window.scrollTo(0,0);}};
+   bar.querySelectorAll('.cb-tab')[1].onclick=()=>{if(MODE!=='brand'){MODE='brand';path=[];brandPath=[];renderBrands();window.scrollTo(0,0);}};
+   app.appendChild(bar);
+ } else {
    const cr=el('<div class="crumb"></div>');let h='<a onclick="goHome()">Κατηγορίες</a>',acc=[];
    path.forEach((idx,k)=>{acc.push(idx);const nm=nodeAt(acc.slice()).n;h+='<span class="sep">›</span>'+(k<path.length-1?'<a onclick="goTo('+(k+1)+')">'+nm+'</a>':nm);});
    cr.innerHTML=h;app.appendChild(cr);
    app.appendChild(el('<button class="back" onclick="goTo('+(path.length-1)+')">← Πίσω</button>'));
  }
- app.appendChild(el('<span class="eyebrow">'+(isHome?'Κατάλογος':'Κατηγορία')+'</span>'));
+ if(!isHome){
+   app.appendChild(el('<span class="eyebrow">Κατηγορία</span>'));
+ }
  app.appendChild(el('<h2 class="h-title">'+(isHome?'Κατηγορίες':cur.n)+'</h2>'));
  app.appendChild(el('<p class="h-sub">'+(cur.c.length?cur.c.length+' υποκατηγορίες':'')+'</p>'));
  if(cur.c.length){
@@ -115,19 +169,14 @@ const BRANDS=[
 {n:"Άροσις",cv:"sub_new_arosis.jpg",im:TREE.c[0].c[4].im.slice()}
 ];
 let MODE='cat';
-function toggleMode(m){
- if(MODE===m)return;
- MODE=m;path=[];
- document.getElementById('btnCat').className='mode'+(m==='cat'?' active':'');
- document.getElementById('btnBrand').className='mode'+(m==='brand'?' active':'');
- if(m==='cat')render();else renderBrands();
- window.scrollTo(0,0);
-}
 let brandPath=[];
 function renderBrands(){
  app.innerHTML='';
  if(!brandPath.length){
-   app.appendChild(el('<span class="eyebrow">Κατάλογος</span>'));
+   const bar=el('<div class="catalog-bar"><span class="cb-label">Κατάλογος</span><div class="cb-tabs"><button class="cb-tab'+(MODE==='cat'?' active':'')+'">Ανά κατηγορία</button><button class="cb-tab'+(MODE==='brand'?' active':'')+'">Ανά εταιρία</button></div></div>');
+   bar.querySelectorAll('.cb-tab')[0].onclick=()=>{MODE='cat';path=[];render();window.scrollTo(0,0);};
+   bar.querySelectorAll('.cb-tab')[1].onclick=()=>{MODE='brand';brandPath=[];renderBrands();window.scrollTo(0,0);};
+   app.appendChild(bar);
    app.appendChild(el('<h2 class="h-title">Εταιρίες</h2>'));
    app.appendChild(el('<p class="h-sub">'+BRANDS.length+' εταιρίες</p>'));
    const t=el('<div class="tiles"></div>');
@@ -149,6 +198,81 @@ function renderBrands(){
    b.im.forEach((fn,ix)=>{const c=el('<button class="card"><img loading="lazy" src="images/'+fn+'"></button>');c.onclick=()=>openLB(b.im,ix);g.appendChild(c);});
    app.appendChild(g);
  }
+}
+
+/* === Side Nav (drill-down) === */
+let navLevel = [];
+let navMode = 'cat';
+
+function setNavMode(m) {
+  navMode = m;
+  navLevel = [];
+  document.getElementById('snTabCat').className = 'sn-mode-tab' + (m === 'cat' ? ' active' : '');
+  document.getElementById('snTabBrand').className = 'sn-mode-tab' + (m === 'brand' ? ' active' : '');
+  renderNavList();
+} // path inside the nav
+
+function toggleNav() {
+  const nav = document.getElementById('sideNav');
+  const ov = document.getElementById('navOverlay');
+  const opening = !nav.classList.contains('open');
+  nav.classList.toggle('open');
+  ov.classList.toggle('open');
+  if (opening) { navLevel = []; navMode = MODE; setNavMode(navMode); }
+}
+function closeNav() {
+  document.getElementById('sideNav').classList.remove('open');
+  document.getElementById('navOverlay').classList.remove('open');
+}
+
+function navBack() {
+  navLevel.pop();
+  renderNavList();
+}
+
+function renderNavList() {
+  const list = document.getElementById('snList');
+  const backBtn = document.getElementById('snBack');
+  list.innerHTML = '';
+  
+  if (navMode === 'brand') {
+    backBtn.style.display = 'none';
+    BRANDS.forEach((b, i) => {
+      const li = document.createElement('li');
+      li.className = 'sn-item';
+      li.innerHTML = '<span>' + b.n + '</span>';
+      li.onclick = () => { MODE = 'brand'; brandPath = [i]; renderBrands(); closeNav(); window.scrollTo(0, 0); };
+      list.appendChild(li);
+    });
+    return;
+  }
+  
+  let node = TREE;
+  for (const i of navLevel) node = node.c[i];
+  backBtn.style.display = navLevel.length ? 'flex' : 'none';
+  
+  node.c.forEach((ch, i) => {
+    const li = document.createElement('li');
+    const isSpecial = (navLevel.length === 0) && (ch.n === 'Νέα Είδη' || ch.n === 'Προσφορές');
+    const hasExpandableSubs = ch.c.length > 0 && !isSpecial;
+    
+    li.className = 'sn-item' + (isSpecial ? ' highlight' : '');
+    li.innerHTML = '<span>' + ch.n + '</span>' + (hasExpandableSubs ? '<span class="sn-arrow">›</span>' : '');
+    
+    li.onclick = () => {
+      if (hasExpandableSubs) {
+        navLevel.push(i);
+        renderNavList();
+      } else {
+        path = [...navLevel, i];
+        MODE = 'cat';
+        render();
+        closeNav();
+        window.scrollTo(0, 0);
+      }
+    };
+    list.appendChild(li);
+  });
 }
 
 render();
